@@ -1,0 +1,1360 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Coaching notes and conversations with Luiza.">
+<title>Luiza — Coaching & Notes</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap');
+
+:root {
+    --ink:#1c1f1a;
+    --muted:#6b7066;
+    --paper:#faf9f5;
+    --paper-warm:#f3f1ea;
+    --line:#e2e1d7;
+    --green:#2f5242;
+    --green-deep:#1e3a2e;
+    --green-soft:#e8efe6;
+    --lime:#d9e8c4;
+    --lime-bright:#e8f2d8;
+    --accent:#c47b4a;
+    --shadow-sm:0 1px 2px rgba(28,31,26,.04);
+    --shadow-md:0 8px 24px rgba(28,31,26,.06);
+    --shadow-lg:0 20px 60px rgba(28,31,26,.08);
+    --radius:6px;
+    --radius-lg:12px;
+}
+
+* { box-sizing:border-box }
+html { scroll-behavior:smooth }
+body {
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:'DM Sans',sans-serif;
+    -webkit-font-smoothing:antialiased; line-height:1.6;
+}
+a { color:inherit; text-decoration:none; transition:color .2s ease; }
+img { max-width:100%; display:block; }
+.shell { max-width:1200px; margin:auto; padding:0 48px }
+
+/* TOPBAR */
+.topbar {
+    height:88px; display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid var(--line); position:sticky; top:0;
+    background:rgba(250,249,245,.85); backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px); z-index:50; gap:20px;
+}
+.brand {
+    font-family:'Playfair Display',serif; font-size:26px; letter-spacing:-.8px;
+    font-weight:600; display:flex; align-items:center; gap:2px; flex-shrink:0;
+}
+.brand span { color:var(--green); font-weight:500; }
+nav { display:flex; gap:34px; align-items:center; font-size:14px; color:#50544d; font-weight:500; }
+nav a { position:relative; }
+nav a:not(.nav-cta)::after {
+    content:''; position:absolute; left:0; bottom:-6px; width:0; height:1.5px;
+    background:var(--green); transition:width .25s ease;
+}
+nav a:not(.nav-cta):hover { color:var(--green); }
+nav a:not(.nav-cta):hover::after { width:100%; }
+.nav-cta {
+    border:1.5px solid var(--green); color:var(--green); padding:12px 20px;
+    border-radius:40px; font-weight:600; transition:all .25s ease; white-space:nowrap;
+}
+.nav-cta:hover { background:var(--green); color:#fff; transform:translateY(-1px); box-shadow:var(--shadow-md); }
+
+/* LANGUAGE SWITCHER */
+.lang-switcher {
+    display:flex; align-items:center; gap:6px; padding:4px;
+    background:var(--green-soft); border-radius:40px; flex-shrink:0;
+}
+.lang-switcher button {
+    background:none; border:0; padding:8px 14px; border-radius:40px;
+    font:600 12px 'DM Sans',sans-serif; color:var(--green); cursor:pointer;
+    transition:all .2s ease; letter-spacing:.3px;
+}
+.lang-switcher button:hover { background:rgba(47,82,66,.08); }
+.lang-switcher button.active { background:var(--green); color:#fff; box-shadow:0 2px 6px rgba(47,82,66,.25); }
+
+/* HERO */
+.hero {
+    padding:100px 0 90px; display:grid; grid-template-columns:1.4fr 1fr;
+    gap:70px; align-items:center; position:relative;
+}
+.hero::before {
+    content:''; position:absolute; top:0; left:-10%; width:60%; height:100%;
+    background:radial-gradient(circle at 30% 40%, rgba(217,232,196,.35), transparent 60%);
+    z-index:-1; pointer-events:none;
+}
+.eyebrow,.meta,.label {
+    font:11px 'DM Mono',monospace; text-transform:uppercase; letter-spacing:2px;
+    color:var(--muted); font-weight:500;
+}
+.eyebrow { color:var(--green); display:inline-flex; align-items:center; gap:10px; }
+.eyebrow::before { content:''; width:24px; height:1px; background:var(--green); }
+h1 {
+    font:500 clamp(52px,6.5vw,84px)/1.02 'Playfair Display',serif;
+    letter-spacing:-2.5px; max-width:680px; margin:26px 0; color:var(--ink);
+}
+h1 em { font-style:italic; color:var(--green); }
+.hero p { font-size:18px; line-height:1.75; color:#5a5f56; max-width:520px; margin:28px 0 0; }
+.hero-actions { display:flex; gap:16px; margin-top:40px; flex-wrap:wrap; }
+.btn-primary {
+    background:var(--green); color:#fff; padding:16px 28px; border-radius:40px;
+    font-weight:600; font-size:14px; border:0; cursor:pointer;
+    transition:all .25s ease; display:inline-flex; align-items:center; gap:8px;
+    box-shadow:0 4px 14px rgba(47,82,66,.25);
+}
+.btn-primary:hover { background:var(--green-deep); transform:translateY(-2px); box-shadow:0 8px 24px rgba(47,82,66,.3); }
+.btn-ghost {
+    background:transparent; color:var(--ink); padding:16px 28px; border-radius:40px;
+    font-weight:600; font-size:14px; border:1.5px solid var(--line); cursor:pointer;
+    transition:all .25s ease; display:inline-flex; align-items:center; gap:8px;
+}
+.btn-ghost:hover { border-color:var(--green); color:var(--green); background:var(--green-soft); }
+
+/* ABOUT CARD */
+.hello {
+    background:linear-gradient(160deg, #eef2e8 0%, #e6ecdb 100%);
+    padding:0; border-radius:var(--radius-lg); overflow:hidden;
+    box-shadow:var(--shadow-lg); position:relative; transition:transform .3s ease;
+}
+.hello:hover { transform:translateY(-4px); }
+.portrait-wrap { height:280px; position:relative; background:#dce4d9; overflow:hidden; }
+.portrait-admin { display:block; width:100%; height:100%; }
+.portrait-wrap img {
+    display:none; width:100%; height:100%; object-fit:cover; transition:transform .6s ease;
+}
+.hello:hover .portrait-wrap img { transform:scale(1.04); }
+.portrait-wrap.has-photo img { display:block; }
+.portrait-upload {
+    position:absolute; right:12px; bottom:12px;
+    background:rgba(250,249,245,.95); color:var(--green); padding:9px 14px;
+    cursor:pointer; border-radius:40px; font-size:12px; font-weight:600;
+    box-shadow:var(--shadow-md); transition:all .2s ease;
+}
+.portrait-upload:hover { background:#fff; transform:translateY(-1px); }
+.hello-content { padding:28px 28px 30px; }
+.hello .label { color:var(--green); }
+.hello h3 { font:500 26px 'Playfair Display',serif; margin:12px 0 10px; letter-spacing:-.5px; }
+.hello p { font-size:14px; line-height:1.65; margin:0 0 20px; color:#4a4f46; }
+.text-link {
+    font-size:14px; font-weight:600; color:var(--green);
+    display:inline-flex; align-items:center; gap:6px; transition:gap .2s ease;
+}
+.text-link:hover { gap:10px; }
+
+/* NOTES SECTION */
+.section-head {
+    display:flex; justify-content:space-between; align-items:end;
+    padding:40px 0 24px; border-top:1px solid var(--line); gap:24px; flex-wrap:wrap;
+}
+.section-head .label { color:var(--muted); }
+h2 { font:500 40px 'Playfair Display',serif; letter-spacing:-1px; margin:10px 0 0; line-height:1.1; }
+.filter { display:flex; gap:8px; flex-wrap:wrap; }
+.filter button {
+    font:12px 'DM Sans',sans-serif; font-weight:600; background:none;
+    border:1.5px solid var(--line); padding:10px 18px; border-radius:40px;
+    color:var(--muted); cursor:pointer; transition:all .2s ease;
+}
+.filter button:hover { border-color:var(--green); color:var(--green); }
+.filter button.active {
+    background:var(--green); border-color:var(--green); color:white;
+    box-shadow:0 4px 12px rgba(47,82,66,.2);
+}
+.notes { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; padding:24px 0 110px; }
+.card {
+    min-height:280px; padding:0; border:1px solid var(--line);
+    border-radius:var(--radius-lg); background:#fff; display:flex;
+    flex-direction:column; overflow:hidden; transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    box-shadow:var(--shadow-sm);
+    cursor:pointer;
+}
+.card:hover { transform:translateY(-6px); box-shadow:var(--shadow-lg); border-color:#c8d3c5; }
+.card-body { padding:26px 24px 22px; display:flex; flex-direction:column; flex:1; }
+.card .meta { font-size:10px; color:var(--muted); display:flex; align-items:center; gap:8px; }
+.card .meta .tag {
+    color:var(--green); background:var(--green-soft); padding:3px 10px;
+    border-radius:20px; font-weight:600; font-size:9px; letter-spacing:1.2px;
+}
+.card h3 { font:500 25px/1.2 'Playfair Display',serif; letter-spacing:-.4px; margin:20px 0 12px; color:var(--ink); }
+.card p {
+    font-size:14px; line-height:1.7; color:#5a5f56; margin:0; flex:1;
+    display:-webkit-box;
+    -webkit-line-clamp:3;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.card .read {
+    margin-top:22px; font-size:13px; font-weight:600; color:var(--green);
+    display:inline-flex; align-items:center; gap:6px; transition:gap .2s ease;
+}
+.card:hover .read { gap:10px; }
+.tag { color:var(--green) }
+.card .note-image { width: 100%; height: 180px; object-fit: cover; background: #e9ece2; transition: transform .5s ease; }
+.card:hover .note-image:not(.placeholder) { transform: scale(1.05); }
+.card .note-image-wrap { overflow: hidden; }
+.card .note-image.placeholder {
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font: 10px 'DM Mono', monospace;
+    text-transform: uppercase; letter-spacing: 1.5px;
+    background: linear-gradient(135deg, #eef2e8, #e2e8d8);
+}
+
+/* BOOKING */
+.booking {
+    background:linear-gradient(150deg, var(--green) 0%, var(--green-deep) 100%);
+    color:#f8f8f1; padding:90px 0; position:relative; overflow:hidden;
+}
+.booking::before {
+    content:''; position:absolute; top:-50%; right:-10%; width:600px; height:600px;
+    background:radial-gradient(circle, rgba(217,232,196,.12), transparent 70%);
+    pointer-events:none;
+}
+.booking-inner {
+    display:grid; grid-template-columns:1fr 1fr; gap:90px;
+    align-items:start; position:relative;
+}
+.booking .eyebrow { color:#c7d9b5; }
+.booking .eyebrow::before { background:#c7d9b5; }
+.booking h2 { font-size:52px; line-height:1.05; margin:20px 0; color:#fff; }
+.booking-copy { color:#d4ddd1; font-size:16px; line-height:1.75; max-width:440px; }
+.booking-note {
+    margin-top:36px; padding-top:26px; border-top:1px solid rgba(255,255,255,.15);
+    color:#d5dfd2; font-size:13px; line-height:1.8;
+}
+.booking-note strong { color:#fff; font-weight:600; }
+.form { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.form label {
+    font:11px 'DM Sans',sans-serif; font-weight:600; text-transform:uppercase;
+    letter-spacing:1px; color:#c8d6c5;
+}
+.form .full { grid-column:1/-1 }
+.form input,.form textarea,.form select {
+    display:block; width:100%; margin-top:9px;
+    border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.08);
+    color:#fff; border-radius:var(--radius); padding:14px 16px;
+    font:14px 'DM Sans',sans-serif; outline:none; transition:all .2s ease;
+}
+.form input:focus,.form textarea:focus,.form select:focus {
+    border-color:var(--lime); background:rgba(255,255,255,.12);
+}
+.form input::placeholder,.form textarea::placeholder { color:rgba(255,255,255,.45) }
+.form select option { color:#1e261f }
+.form textarea { height:100px; resize:vertical }
+.form button {
+    grid-column:1/-1; background:var(--lime); color:var(--green-deep); border:0;
+    padding:17px 20px; font-weight:700; font-size:14px; cursor:pointer;
+    border-radius:40px; margin-top:6px; transition:all .25s ease;
+    box-shadow:0 4px 16px rgba(0,0,0,.15);
+}
+.form button:hover { background:var(--lime-bright); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.2); }
+.form button:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+.form-status { grid-column:1/-1; min-height:20px; font-size:13px; color:var(--lime); margin:0; font-weight:500; }
+.form .consent {
+    display:flex; align-items:center; gap:10px; font-size:12px;
+    color:#c8d6c5; text-transform:none; letter-spacing:0; font-weight:400;
+}
+.form .consent input { width:auto; margin:0; accent-color:var(--lime); }
+
+/* FOOTER */
+.footer {
+    padding:40px 0; display:flex; align-items:center; justify-content:space-between;
+    color:var(--muted); font:11px 'DM Mono',monospace;
+    text-transform:uppercase; letter-spacing:1.2px;
+    border-top:1px solid var(--line); margin-top:0;
+}
+.footer-links { display:flex; gap:24px }
+.footer-links a { transition:color .2s ease; }
+.footer-links a:hover { color:var(--green); }
+
+/* MODALS */
+.modal-backdrop {
+    position:fixed; inset:0; background:rgba(20,25,20,.6);
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    display:none; align-items:center; justify-content:center; padding:20px; z-index:100;
+}
+.modal-backdrop.open { display:flex }
+.modal {
+    width:min(540px,100%); background:var(--paper); padding:36px;
+    border-radius:var(--radius-lg); box-shadow:0 40px 100px rgba(0,0,0,.3);
+    max-height:90vh; overflow-y:auto;
+}
+.modal-top { display:flex; justify-content:space-between; align-items:center }
+.modal h3 { font:28px 'Playfair Display',serif; margin:0; letter-spacing:-.5px; }
+.close {
+    border:0; background:none; font-size:24px; cursor:pointer; color:var(--muted);
+    width:36px; height:36px; border-radius:50%; transition:all .2s ease;
+    display:flex; align-items:center; justify-content:center;
+}
+.close:hover { background:var(--line); color:var(--ink); }
+.modal label {
+    display:block; font:10px 'DM Mono',monospace; text-transform:uppercase;
+    color:var(--muted); margin:20px 0 8px; letter-spacing:1.2px; font-weight:500;
+}
+.modal input,.modal textarea,.modal select {
+    width:100%; padding:13px 15px; border:1.5px solid var(--line);
+    border-radius:var(--radius); background:#fff; font:14px 'DM Sans',sans-serif;
+    outline:none; transition:border-color .2s ease;
+}
+.modal input:focus,.modal textarea:focus,.modal select:focus { border-color:var(--green); }
+.modal textarea { height:100px; resize:vertical; }
+.modal .save {
+    margin-top:20px; background:var(--green); color:white; border:0;
+    padding:14px 22px; cursor:pointer; font-weight:600; border-radius:40px;
+    font-size:14px; transition:all .2s ease;
+}
+.modal .save:hover { background:var(--green-deep); }
+.modal .hint { font-size:12px; color:var(--muted); line-height:1.6; }
+.hidden { display:none!important }
+
+/* NOTE DETAIL MODAL */
+.note-detail-modal {
+    width:min(720px,100%);
+    padding:0;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    max-height:88vh;
+    position:relative;
+}
+.note-detail-modal #noteDetailContent {
+    display:flex;
+    flex-direction:column;
+    flex:1 1 auto;
+    min-height:0;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+}
+.note-detail-modal .note-detail-image {
+    width:100%;
+    height:280px;
+    object-fit:cover;
+    background:#e9ece2;
+    flex-shrink:0;
+}
+.note-detail-modal .note-detail-image.placeholder {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--muted);
+    font:11px 'DM Mono',monospace;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    background:linear-gradient(135deg, #eef2e8, #e2e8d8);
+}
+.note-detail-modal .note-detail-header {
+    padding:28px 36px 0;
+    flex-shrink:0;
+}
+.note-detail-modal .note-detail-meta {
+    font:10px 'DM Mono',monospace;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+}
+.note-detail-modal .note-detail-meta .tag {
+    color:var(--green);
+    background:var(--green-soft);
+    padding:4px 12px;
+    border-radius:20px;
+    font-weight:600;
+    font-size:9px;
+    letter-spacing:1.2px;
+}
+.note-detail-modal h2 {
+    font:500 34px/1.2 'Playfair Display',serif;
+    letter-spacing:-.8px;
+    margin:0 0 20px;
+    color:var(--ink);
+}
+.note-detail-modal .modal-body {
+    padding:0 36px 36px;
+    flex:1 1 auto;
+}
+.note-detail-modal .note-detail-body {
+    font-size:15px;
+    line-height:1.8;
+    color:#4a4f46;
+    white-space:pre-wrap;
+    margin:0 0 28px;
+    overflow-wrap:break-word;
+    word-wrap:break-word;
+}
+.note-detail-modal .note-detail-cta {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--green);
+    color:#fff;
+    padding:14px 24px;
+    border-radius:40px;
+    font-weight:600;
+    font-size:14px;
+    transition:all .25s ease;
+    box-shadow:0 4px 14px rgba(47,82,66,.25);
+}
+.note-detail-modal .note-detail-cta:hover {
+    background:var(--green-deep);
+    transform:translateY(-2px);
+    box-shadow:0 8px 24px rgba(47,82,66,.3);
+}
+.note-detail-modal .modal-top {
+    position:absolute;
+    top:12px;
+    right:12px;
+    left:auto;
+    padding:0;
+    background:none;
+    z-index:5;
+}
+.note-detail-modal .close {
+    color:#fff;
+    background:rgba(0,0,0,.45);
+    backdrop-filter:blur(6px);
+    width:40px;
+    height:40px;
+}
+.note-detail-modal .close:hover {
+    background:rgba(0,0,0,.7);
+    color:#fff;
+}
+
+@media(max-width:760px) {
+    .note-detail-modal .note-detail-header,
+    .note-detail-modal .modal-body { padding-left:22px; padding-right:22px; }
+    .note-detail-modal h2 { font-size:26px; }
+    .note-detail-modal .note-detail-image { height:200px; }
+    .note-detail-modal { max-height:92vh; }
+}
+
+/* ADMIN IMAGE UPLOAD */
+.admin-image-upload {
+    display: flex; align-items: center; gap: 12px; margin: 8px 0 4px;
+    padding: 14px; border: 1.5px dashed var(--line); border-radius: var(--radius);
+    background: #fbfaf6; flex-wrap: wrap;
+}
+.admin-image-upload input[type="file"] { display: none; }
+.admin-image-upload .upload-btn {
+    background: var(--green); color: white; border: 0; padding: 10px 16px;
+    font: 12px 'DM Sans', sans-serif; font-weight: 600; border-radius: 40px;
+    cursor: pointer; transition:background .2s ease;
+}
+.admin-image-upload .upload-btn:hover { background: var(--green-deep); }
+.admin-image-preview {
+    width: 64px; height: 64px; object-fit: cover; border-radius: var(--radius);
+    border: 1px solid var(--line); display: none;
+}
+.admin-image-preview.visible { display: block; }
+.admin-image-remove {
+    background: none; border: 0; color: var(--accent); font-size: 12px;
+    cursor: pointer; padding: 6px 10px; font-weight: 600;
+}
+.admin-image-remove.hidden { display: none; }
+.admin-note-thumb {
+    width: 44px; height: 44px; object-fit: cover; border-radius: var(--radius);
+    border: 1px solid var(--line); flex-shrink: 0;
+}
+
+/* Loading overlay for translation */
+.translating-overlay {
+    position:fixed; top:0; left:0; right:0; height:3px; z-index:200;
+    background:linear-gradient(90deg, var(--green), var(--lime), var(--green));
+    background-size:200% 100%;
+    animation:translating 1.2s linear infinite;
+    display:none;
+}
+.translating-overlay.visible { display:block; }
+@keyframes translating {
+    0% { background-position:0% 50%; }
+    100% { background-position:200% 50%; }
+}
+
+/* Responsive */
+@media(max-width:960px) {
+    .hero { grid-template-columns:1fr; gap:40px; padding:70px 0 60px; }
+    .hello { max-width:480px; }
+    .notes { grid-template-columns:repeat(2,1fr); }
+    .booking-inner { grid-template-columns:1fr; gap:50px; }
+}
+@media(max-width:760px) {
+    .shell { padding:0 24px }
+    .topbar {
+        height:auto; min-height:72px; flex-wrap:wrap; gap:10px; padding:10px 0;
+    }
+    nav { gap:18px }
+    nav a:not(.nav-cta) { display:none }
+    .nav-cta { padding:10px 16px; font-size:13px; }
+    .lang-switcher button { padding:7px 10px; font-size:11px; }
+    .hero { padding:50px 0 40px; }
+    h1 { letter-spacing:-1.8px; }
+    h2 { font-size:32px; }
+    .section-head { align-items:flex-start; flex-direction:column; gap:18px; }
+    .notes { grid-template-columns:1fr; padding-bottom:70px; }
+    .card { min-height:auto; }
+    .booking { padding:60px 0 }
+    .booking h2 { font-size:38px }
+    .booking-inner { gap:36px; }
+    .footer { padding:30px 0; align-items:flex-start; gap:18px; flex-direction:column; }
+    .hero-actions { flex-direction:column; align-items:stretch; }
+    .btn-primary, .btn-ghost { justify-content:center; }
+}
+</style>
+</head>
+<body>
+<div class="translating-overlay" id="translatingOverlay"></div>
+
+<div class="shell">
+<header class="topbar">
+<a class="brand" href="#top">Luiza<span> · coaching</span></a>
+<nav>
+<a href="#notes" data-i18n="nav.notes">Notes</a>
+<a href="#about" data-i18n="nav.about">About</a>
+<a class="nav-cta" href="#meet" data-i18n="nav.book">Book a conversation ↗</a>
+</nav>
+<div class="lang-switcher" role="group" aria-label="Language">
+<button data-lang="en" class="active">EN</button>
+<button data-lang="ro">RO</button>
+<button data-lang="sv">SV</button>
+</div>
+</header>
+
+<section class="hero" id="top">
+<div>
+<div class="eyebrow" data-i18n="hero.eyebrow">Coaching · Notes · Conversations</div>
+<h1 data-i18n-html="hero.title">A little more<br><em>clarity</em>, together.</h1>
+<p data-i18n="hero.subtitle">Coaching for people ready to make a thoughtful next move. I share notes and questions from the work—and make space for a conversation when you’re ready.</p>
+<div class="hero-actions">
+<a class="btn-primary" href="#meet" data-i18n="hero.cta1">Book a free intro call →</a>
+<a class="btn-ghost" href="#notes" data-i18n="hero.cta2">Read the notes</a>
+</div>
+</div>
+<aside class="hello" id="about">
+<div class="portrait-wrap" id="portraitWrap">
+<a class="portrait-admin" href="#" id="openAdminLogin" aria-label="Sign in to manage notes">
+<img id="portrait" alt="Luiza">
+</a>
+<label class="portrait-upload hidden" id="photoUploadLabel" for="photo-input" data-i18n="about.changePhoto">Change photo</label>
+<input id="photo-input" type="file" accept="image/*" hidden>
+</div>
+<div class="hello-content">
+<div class="label" data-i18n="about.label">Your coach</div>
+<h3 data-i18n="about.hi">Hi, I’m Luiza.</h3>
+<p data-i18n="about.desc">I help you find clarity, build on your strengths, and take your next step with intention.</p>
+<a class="text-link" href="#meet" data-i18n="about.link">Let’s explore working together →</a>
+</div>
+</aside>
+</section>
+
+<section id="notes">
+<div class="section-head">
+<div>
+<div class="label"><span data-i18n="notes.label">Coaching notes</span> · <span id="note-count">03</span> <span data-i18n="notes.entries">entries</span></div>
+<h2 data-i18n="notes.title">Notes for your next step</h2>
+</div>
+<div class="filter">
+<button class="active" data-filter="all" data-i18n="filter.all">All notes</button>
+<button data-filter="ideas" data-i18n="filter.ideas">Ideas</button>
+<button data-filter="work" data-i18n="filter.work">Work</button>
+<button data-filter="life" data-i18n="filter.life">Life</button>
+</div>
+</div>
+<div class="notes" id="notes-grid"></div>
+</section>
+</div>
+
+<section class="booking" id="meet">
+<div class="shell booking-inner">
+<div>
+<div class="eyebrow" data-i18n="booking.eyebrow">Coaching conversations</div>
+<h2 data-i18n-html="booking.title">Let's make room<br>for what's next.</h2>
+<p class="booking-copy" data-i18n="booking.copy">Have a project in mind, a question to untangle, or just want to compare notes? Send me a few details and we’ll find a time.</p>
+<div class="booking-note">
+<strong data-i18n="booking.note1">Introductory conversation · 30 minutes</strong><br>
+<span data-i18n="booking.note2">I will confirm a time with you by email</span>
+</div>
+</div>
+<form class="form" id="booking-form">
+<label><span data-i18n="form.name">Your name</span><input required name="name" placeholder="Name"></label>
+<label><span data-i18n="form.email">Email address</span><input required type="email" name="email" placeholder="you@example.com"></label>
+<label class="full"><span data-i18n="form.topic">What would you like to talk about?</span>
+<select name="topic">
+<option data-i18n="form.topic1">Something I read here</option>
+<option data-i18n="form.topic2">A project or collaboration</option>
+<option data-i18n="form.topic3">Advice or a quick question</option>
+<option data-i18n="form.topic4">Just saying hello</option>
+</select>
+</label>
+<label class="full"><span data-i18n="form.context">A little context</span>
+<textarea name="message" placeholder="What would you like support with?" required></textarea>
+</label>
+<label class="full consent">
+<input type="checkbox" name="consent" required>
+<span data-i18n="form.consent">I agree that Luiza may use these details to respond to my meeting request.</span>
+</label>
+<button type="submit" data-i18n="form.submit">Request an introductory call →</button>
+<p class="form-status" id="form-status" aria-live="polite"></p>
+</form>
+</div>
+</section>
+
+<div class="shell">
+<footer class="footer">
+<span>© <span id="year"></span> Luiza · Coaching</span>
+<div class="footer-links">
+<a id="email-link" href="#meet" data-i18n="footer.contact">Get in touch</a>
+<a href="#top" data-i18n="footer.top">Back to top ↑</a>
+</div>
+</footer>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-backdrop" id="loginModal">
+  <div class="modal">
+    <div class="modal-top">
+      <h3 data-i18n="login.title">Owner login</h3>
+      <button class="close" id="closeLogin">✕</button>
+    </div>
+    <p class="hint" style="margin-top:16px;" data-i18n="login.hint">Sign in to add, edit, or delete coaching notes.</p>
+    <label for="loginEmail" data-i18n="login.email">Email</label>
+    <input id="loginEmail" type="email" placeholder="luiza@maratimoc.ro" value="luiza@maratimoc.ro" readonly>
+    <label for="loginPassword" data-i18n="login.password">Password</label>
+    <input id="loginPassword" type="password" placeholder="Enter password">
+    <p class="hint" id="loginError" style="color:#a44; min-height:18px; margin-top:8px;"></p>
+    <button class="save" id="loginBtn" data-i18n="login.btn">Sign in</button>
+    <p class="hint" style="margin-top:14px;" data-i18n-html="login.demo">Demo password: <strong>luiza2025</strong> (client-side only for demonstration)</p>
+  </div>
+</div>
+
+<!-- ADMIN NOTES MANAGER MODAL -->
+<div class="modal-backdrop" id="adminModal">
+  <div class="modal" style="width:min(760px,100%);">
+    <div class="modal-top">
+      <h3 data-i18n="admin.title">Manage notes</h3>
+      <button class="close" id="closeAdmin">✕</button>
+    </div>
+    <div style="margin-top:24px;">
+      <div style="display:flex; gap:12px; align-items:end; flex-wrap:wrap; margin-bottom:24px;">
+        <div style="flex:1; min-width:180px;">
+          <label style="margin:0 0 6px;" data-i18n="admin.noteTitle">Title</label>
+          <input id="noteTitle" placeholder="Note title">
+        </div>
+        <div>
+          <label style="margin:0 0 6px;" data-i18n="admin.category">Category</label>
+          <select id="noteCategory">
+            <option value="ideas" data-i18n="filter.ideas">Ideas</option>
+            <option value="work" data-i18n="filter.work">Work</option>
+            <option value="life" data-i18n="filter.life">Life</option>
+          </select>
+        </div>
+        <div>
+          <label style="margin:0 0 6px;" data-i18n="admin.date">Date</label>
+          <input id="noteDate" type="date">
+        </div>
+        <button class="save" id="addNoteBtn" style="padding:13px 20px;" data-i18n="admin.add">Add note</button>
+      </div>
+      <label data-i18n="admin.body">Body</label>
+      <textarea id="noteBody" placeholder="Write the note..."></textarea>
+
+      <div class="admin-image-upload">
+        <label class="upload-btn" for="noteImageInput" data-i18n="admin.choosePhoto">Choose photo</label>
+        <input type="file" id="noteImageInput" accept="image/*">
+        <img class="admin-image-preview" id="noteImagePreview" alt="Preview">
+        <button class="admin-image-remove hidden" id="removeImageBtn" data-i18n="admin.removePhoto">Remove</button>
+        <span class="hint" id="imageStatus" style="font-size:11px; color:var(--muted);"></span>
+      </div>
+
+      <div id="adminNotesList" style="margin-top:28px; max-height:320px; overflow-y:auto;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- NOTE DETAIL MODAL -->
+<div class="modal-backdrop" id="noteDetailModal">
+  <div class="modal note-detail-modal" id="noteDetailBox">
+    <div class="modal-top">
+      <button class="close" id="closeNoteDetail" aria-label="Close">✕</button>
+    </div>
+    <div id="noteDetailContent"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STATIC UI TRANSLATIONS
+// ============================================================
+const uiTranslations = {
+  en: {
+    "nav.notes": "Notes", "nav.about": "About", "nav.book": "Book a conversation ↗",
+    "hero.eyebrow": "Coaching · Notes · Conversations",
+    "hero.title": "A little more<br><em>clarity</em>, together.",
+    "hero.subtitle": "Coaching for people ready to make a thoughtful next move. I share notes and questions from the work—and make space for a conversation when you’re ready.",
+    "hero.cta1": "Book a free intro call →", "hero.cta2": "Read the notes",
+    "about.changePhoto": "Change photo", "about.label": "Your coach", "about.hi": "Hi, I’m Luiza.",
+    "about.desc": "I help you find clarity, build on your strengths, and take your next step with intention.",
+    "about.link": "Let’s explore working together →",
+    "notes.label": "Coaching notes", "notes.entries": "entries", "notes.title": "Notes for your next step",
+    "filter.all": "All notes", "filter.ideas": "Ideas", "filter.work": "Work", "filter.life": "Life",
+    "booking.eyebrow": "Coaching conversations", "booking.title": "Let's make room<br>for what's next.",
+    "booking.copy": "Have a project in mind, a question to untangle, or just want to compare notes? Send me a few details and we’ll find a time.",
+    "booking.note1": "Introductory conversation · 30 minutes", "booking.note2": "I will confirm a time with you by email",
+    "form.name": "Your name", "form.email": "Email address", "form.topic": "What would you like to talk about?",
+    "form.topic1": "Something I read here", "form.topic2": "A project or collaboration",
+    "form.topic3": "Advice or a quick question", "form.topic4": "Just saying hello",
+    "form.context": "A little context",
+    "form.consent": "I agree that Luiza may use these details to respond to my meeting request.",
+    "form.submit": "Request an introductory call →",
+    "footer.contact": "Get in touch", "footer.top": "Back to top ↑",
+    "login.title": "Owner login", "login.hint": "Sign in to add, edit, or delete coaching notes.",
+    "login.email": "Email", "login.password": "Password", "login.btn": "Sign in",
+    "login.demo": "Demo password: <strong>luiza2025</strong> (client-side only for demonstration)",
+    "admin.title": "Manage notes", "admin.noteTitle": "Title", "admin.category": "Category",
+    "admin.date": "Date", "admin.add": "Add note", "admin.body": "Body",
+    "admin.choosePhoto": "Choose photo", "admin.removePhoto": "Remove",
+    "card.read": "Continue the conversation <span>↗</span>", "card.noPhoto": "No photo",
+    "card.readMore": "Read the full note →",
+    "noteDetail.cta": "Let's talk about this →",
+    "delete.button": "Delete", "delete.confirm": "Delete this note?",
+    "addnote.alert": "Please fill in both title and body."
+  },
+  ro: {
+    "nav.notes": "Note", "nav.about": "Despre", "nav.book": "Programează o conversație ↗",
+    "hero.eyebrow": "Coaching · Note · Conversații",
+    "hero.title": "Puțin mai multă<br><em>claritate</em>, împreună.",
+    "hero.subtitle": "Coaching pentru oameni pregătiți să facă un pas următor cu grijă. Împărtășesc note și întrebări din munca mea—și fac loc pentru o conversație când ești pregătit.",
+    "hero.cta1": "Programează un apel introductiv gratuit →", "hero.cta2": "Citește notele",
+    "about.changePhoto": "Schimbă fotografia", "about.label": "Coach-ul tău", "about.hi": "Bună, sunt Luiza.",
+    "about.desc": "Te ajut să găsești claritate, să construiești pe punctele tale forte și să faci pasul următor cu intenție.",
+    "about.link": "Hai să explorăm cum putem lucra împreună →",
+    "notes.label": "Note de coaching", "notes.entries": "intrări", "notes.title": "Note pentru pasul tău următor",
+    "filter.all": "Toate notele", "filter.ideas": "Idei", "filter.work": "Muncă", "filter.life": "Viață",
+    "booking.eyebrow": "Conversații de coaching", "booking.title": "Să facem loc<br>pentru ce urmează.",
+    "booking.copy": "Ai un proiect în minte, o întrebare de lămurit sau vrei doar să schimbăm idei? Trimite-mi câteva detalii și vom găsi un moment.",
+    "booking.note1": "Conversație introductivă · 30 de minute", "booking.note2": "Îți voi confirma o oră prin email",
+    "form.name": "Numele tău", "form.email": "Adresă de email", "form.topic": "Despre ce ai vrea să vorbim?",
+    "form.topic1": "Ceva ce am citit aici", "form.topic2": "Un proiect sau o colaborare",
+    "form.topic3": "Sfaturi sau o întrebare rapidă", "form.topic4": "Doar un salut",
+    "form.context": "Un pic de context",
+    "form.consent": "Sunt de acord ca Luiza să folosească aceste detalii pentru a răspunde cererii mele de întâlnire.",
+    "form.submit": "Solicită un apel introductiv →",
+    "footer.contact": "Contactează-mă", "footer.top": "Înapoi sus ↑",
+    "login.title": "Autentificare proprietar", "login.hint": "Autentifică-te pentru a adăuga, edita sau șterge note de coaching.",
+    "login.email": "Email", "login.password": "Parolă", "login.btn": "Autentificare",
+    "login.demo": "Parolă demo: <strong>luiza2025</strong> (doar pe partea clientului, pentru demonstrație)",
+    "admin.title": "Gestionează notele", "admin.noteTitle": "Titlu", "admin.category": "Categorie",
+    "admin.date": "Data", "admin.add": "Adaugă notă", "admin.body": "Conținut",
+    "admin.choosePhoto": "Alege fotografie", "admin.removePhoto": "Elimină",
+    "card.read": "Continuă conversația <span>↗</span>", "card.noPhoto": "Fără fotografie",
+    "card.readMore": "Citește nota completă →",
+    "noteDetail.cta": "Hai să vorbim despre asta →",
+    "delete.button": "Șterge", "delete.confirm": "Ștergi această notă?",
+    "addnote.alert": "Completează titlul și conținutul."
+  },
+  sv: {
+    "nav.notes": "Anteckningar", "nav.about": "Om", "nav.book": "Boka ett samtal ↗",
+    "hero.eyebrow": "Coaching · Anteckningar · Samtal",
+    "hero.title": "Lite mer<br><em>klarhet</em>, tillsammans.",
+    "hero.subtitle": "Coaching för människor som är redo att ta ett genomtänkt nästa steg. Jag delar anteckningar och frågor från arbetet—och skapar utrymme för ett samtal när du är redo.",
+    "hero.cta1": "Boka ett gratis introduktionssamtal →", "hero.cta2": "Läs anteckningarna",
+    "about.changePhoto": "Byt foto", "about.label": "Din coach", "about.hi": "Hej, jag är Luiza.",
+    "about.desc": "Jag hjälper dig att hitta klarhet, bygga på dina styrkor och ta ditt nästa steg med avsikt.",
+    "about.link": "Låt oss utforska att arbeta tillsammans →",
+    "notes.label": "Coachningsanteckningar", "notes.entries": "inlägg", "notes.title": "Anteckningar för ditt nästa steg",
+    "filter.all": "Alla anteckningar", "filter.ideas": "Idéer", "filter.work": "Arbete", "filter.life": "Liv",
+    "booking.eyebrow": "Coachningssamtal", "booking.title": "Låt oss göra plats<br>för det som kommer.",
+    "booking.copy": "Har du ett projekt i tankarna, en fråga att reda ut eller vill du bara jämföra anteckningar? Skicka några detaljer så hittar vi en tid.",
+    "booking.note1": "Introduktionssamtal · 30 minuter", "booking.note2": "Jag bekräftar en tid med dig via e-post",
+    "form.name": "Ditt namn", "form.email": "E-postadress", "form.topic": "Vad vill du prata om?",
+    "form.topic1": "Något jag läste här", "form.topic2": "Ett projekt eller samarbete",
+    "form.topic3": "Råd eller en snabb fråga", "form.topic4": "Bara säga hej",
+    "form.context": "Lite sammanhang",
+    "form.consent": "Jag samtycker till att Luiza använder dessa uppgifter för att svara på min mötesförfrågan.",
+    "form.submit": "Begär ett introduktionssamtal →",
+    "footer.contact": "Kontakta mig", "footer.top": "Tillbaka till toppen ↑",
+    "login.title": "Ägarinloggning", "login.hint": "Logga in för att lägga till, redigera eller ta bort coachningsanteckningar.",
+    "login.email": "E-post", "login.password": "Lösenord", "login.btn": "Logga in",
+    "login.demo": "Demolösenord: <strong>luiza2025</strong> (endast klientsidan, för demonstration)",
+    "admin.title": "Hantera anteckningar", "admin.noteTitle": "Titel", "admin.category": "Kategori",
+    "admin.date": "Datum", "admin.add": "Lägg till anteckning", "admin.body": "Innehåll",
+    "admin.choosePhoto": "Välj foto", "admin.removePhoto": "Ta bort",
+    "card.read": "Fortsätt samtalet <span>↗</span>", "card.noPhoto": "Inget foto",
+    "card.readMore": "Läs hela anteckningen →",
+    "noteDetail.cta": "Låt oss prata om detta →",
+    "delete.button": "Ta bort", "delete.confirm": "Ta bort denna anteckning?",
+    "addnote.alert": "Fyll i både titel och innehåll."
+  }
+};
+
+// ============================================================
+// DEFAULT NOTES (always English — translation happens on display)
+// ============================================================
+const defaultNotes = [
+  {"date":"Oct 18, 2025","title":"The value of a slower question","category":"ideas","body":"The best conversations I’ve had recently began with a question that didn’t need an immediate answer.\n\nWe tend to rush toward solutions. But some of the most useful moments in coaching come from sitting with the question a little longer — letting it breathe, letting it change shape."},
+  {"date":"Oct 09, 2025","title":"Make the first version smaller","category":"work","body":"A useful reminder from a recent project: the fastest way to learn is often to make the smallest thing that can teach you something.\n\nInstead of planning the perfect launch, we shipped a one-page experiment. The feedback came back within a week — and it reshaped everything that followed."},
+  {"date":"Sep 27, 2025","title":"A walk without a destination","category":"life","body":"An hour outside, no podcast, no route. I came back with less urgency and one surprisingly clear idea."}
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let currentLang = localStorage.getItem('luizaLang') || 'en';
+
+// Custom notes stored in localStorage are treated as English (canonical).
+// Display notes may be translated copies.
+let savedNotes = null;
+try {
+  const raw = localStorage.getItem('luizaNotes');
+  if (raw) {
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed) && parsed.length) savedNotes = parsed;
+  }
+} catch (e) {}
+
+let notes = savedNotes
+  ? JSON.parse(JSON.stringify(savedNotes))
+  : JSON.parse(JSON.stringify(defaultNotes));
+
+let active = 'all';
+const grid = document.getElementById('notes-grid');
+const overlay = document.getElementById('translatingOverlay');
+
+// ============================================================
+// UI TRANSLATION HELPERS
+// ============================================================
+function t(key) {
+  return (uiTranslations[currentLang] && uiTranslations[currentLang][key]) || uiTranslations.en[key] || key;
+}
+
+function applyUITranslations() {
+  document.documentElement.lang = currentLang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.getAttribute('data-i18n'));
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    el.innerHTML = t(el.getAttribute('data-i18n-html'));
+  });
+}
+
+function saveNotes() {
+  if (!savedNotes) return;
+  try { localStorage.setItem('luizaNotes', JSON.stringify(savedNotes)); }
+  catch (e) { console.warn('Could not save notes', e); }
+}
+
+// ============================================================
+// TRANSLATION — Google Translate free endpoint
+// - No API key required for basic use
+// - CORS enabled
+// - Handles up to ~5000 chars per request
+// - Cached per (from|to|text) in localStorage
+// ============================================================
+const TRANSLATE_ENDPOINT = 'https://translate.googleapis.com/translate_a/single';
+const translationCache = JSON.parse(localStorage.getItem('luizaTranslationCache') || '{}');
+let cacheDirty = false;
+
+function saveTranslationCache() {
+  if (!cacheDirty) return;
+  try { localStorage.setItem('luizaTranslationCache', JSON.stringify(translationCache)); }
+  catch (e) {}
+  cacheDirty = false;
+}
+
+// Break long text into ~1500-char chunks on sentence boundaries
+function chunkText(text, size = 1500) {
+  if (text.length <= size) return [text];
+  const sentences = text.match(/[^.!?\n]+[.!?]?\s*/g) || [text];
+  const chunks = [];
+  let current = '';
+  for (const s of sentences) {
+    if ((current + s).length > size) {
+      if (current) chunks.push(current);
+      if (s.length > size) {
+        for (let i = 0; i < s.length; i += size) chunks.push(s.slice(i, i + size));
+        current = '';
+      } else {
+        current = s;
+      }
+    } else {
+      current += s;
+    }
+  }
+  if (current) chunks.push(current);
+  return chunks;
+}
+
+async function translateChunk(text, from, to) {
+  const cacheKey = `${from}|${to}|${text}`;
+  if (translationCache[cacheKey]) return translationCache[cacheKey];
+
+  const url = `${TRANSLATE_ENDPOINT}?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    // Response shape: [[[translatedChunk, originalChunk, ...], ...], ...]
+    if (Array.isArray(data) && Array.isArray(data[0])) {
+      const translated = data[0].map(part => part[0]).join('');
+      if (translated) {
+        translationCache[cacheKey] = translated;
+        cacheDirty = true;
+        return translated;
+      }
+    }
+    throw new Error('Unexpected response shape');
+  } catch (e) {
+    console.warn('Translate failed for chunk:', text.slice(0, 40), e);
+    return text; // fall back to original
+  }
+}
+
+async function translateText(text, from, to) {
+  if (!text || from === to) return text;
+  const chunks = chunkText(text);
+  const results = [];
+  for (const chunk of chunks) {
+    results.push(await translateChunk(chunk, from, to));
+  }
+  saveTranslationCache();
+  return results.join('');
+}
+
+async function translateNote(note, from, to) {
+  if (from === to) return note;
+  const [title, body] = await Promise.all([
+    translateText(note.title, from, to),
+    translateText(note.body, from, to)
+  ]);
+  let dateStr = note.date;
+  try {
+    const parsed = new Date(note.date);
+    if (!isNaN(parsed)) {
+      const locale = to === 'ro' ? 'ro-RO' : to === 'sv' ? 'sv-SE' : 'en-US';
+      dateStr = parsed.toLocaleDateString(locale, { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+  } catch {}
+  return { ...note, title, body, date: dateStr };
+}
+
+// ============================================================
+// LANGUAGE SWITCHING
+// ============================================================
+let switching = false;
+
+async function setLanguage(lang) {
+  if (!uiTranslations[lang] || switching) return;
+  switching = true;
+  currentLang = lang;
+  localStorage.setItem('luizaLang', lang);
+
+  document.querySelectorAll('.lang-switcher button').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+
+  applyUITranslations();
+
+  const sourceNotes = savedNotes
+    ? JSON.parse(JSON.stringify(savedNotes))
+    : JSON.parse(JSON.stringify(defaultNotes));
+
+  if (lang === 'en') {
+    notes = sourceNotes;
+    render();
+    switching = false;
+    return;
+  }
+
+  overlay.classList.add('visible');
+  try {
+    const translated = await Promise.all(
+      sourceNotes.map(n => translateNote(n, 'en', lang))
+    );
+    notes = translated;
+    render();
+  } catch (e) {
+    console.warn('Batch translation error', e);
+    notes = sourceNotes;
+    render();
+  } finally {
+    overlay.classList.remove('visible');
+    switching = false;
+  }
+
+  if (document.getElementById('adminModal').classList.contains('open')) {
+    renderAdminNotesList();
+  }
+}
+
+// ============================================================
+// RENDER NOTES
+// ============================================================
+function render() {
+  const shown = notes.filter(n => active === 'all' || n.category === active);
+  grid.innerHTML = shown.map((n) => {
+    const realIndex = notes.indexOf(n);
+    return `<article class="card" onclick="openNoteDetail(${realIndex})" role="button" tabindex="0" aria-label="${escapeHTML(n.title)}">
+      ${n.image
+        ? `<div class="note-image-wrap"><img class="note-image" src="${n.image}" alt=""></div>`
+        : `<div class="note-image placeholder">${t('card.noPhoto')}</div>`
+      }
+      <div class="card-body">
+        <div class="meta">${n.date} <span class="tag">${t('filter.' + n.category)}</span></div>
+        <h3>${escapeHTML(n.title)}</h3>
+        <p>${escapeHTML(n.body)}</p>
+        <span class="read">${t('card.readMore')}</span>
+      </div>
+    </article>`;
+  }).join('');
+  document.getElementById('note-count').textContent = String(notes.length).padStart(2, '0');
+}
+
+function escapeHTML(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+// ============================================================
+// NOTE DETAIL MODAL
+// ============================================================
+const noteDetailModal = document.getElementById('noteDetailModal');
+const noteDetailContent = document.getElementById('noteDetailContent');
+
+window.openNoteDetail = function(index) {
+  const note = notes[index];
+  if (!note) return;
+
+  const imageHTML = note.image
+    ? `<img class="note-detail-image" src="${note.image}" alt="">`
+    : `<div class="note-detail-image placeholder">${t('card.noPhoto')}</div>`;
+
+  noteDetailContent.innerHTML = `
+    ${imageHTML}
+    <div class="note-detail-header">
+      <div class="note-detail-meta">${note.date} <span class="tag">${t('filter.' + note.category)}</span></div>
+      <h2>${escapeHTML(note.title)}</h2>
+    </div>
+    <div class="modal-body">
+      <p class="note-detail-body">${escapeHTML(note.body)}</p>
+      <a class="note-detail-cta" href="#meet" onclick="closeNoteDetail()">${t('noteDetail.cta')}</a>
+    </div>
+  `;
+
+  noteDetailContent.scrollTop = 0;
+  noteDetailModal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+
+function closeNoteDetail() {
+  noteDetailModal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('closeNoteDetail').onclick = closeNoteDetail;
+noteDetailModal.addEventListener('click', (e) => {
+  if (e.target === noteDetailModal) closeNoteDetail();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && noteDetailModal.classList.contains('open')) closeNoteDetail();
+});
+
+document.addEventListener('keydown', (e) => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('card')) {
+    e.preventDefault();
+    e.target.click();
+  }
+});
+
+// ============================================================
+// FILTERS
+// ============================================================
+document.querySelectorAll('.filter button').forEach(b => b.onclick = () => {
+  document.querySelector('.filter .active').classList.remove('active');
+  b.classList.add('active');
+  active = b.dataset.filter;
+  render();
+});
+
+// ============================================================
+// LANGUAGE BUTTONS
+// ============================================================
+document.querySelectorAll('.lang-switcher button').forEach(btn => {
+  btn.onclick = () => setLanguage(btn.dataset.lang);
+});
+
+// ============================================================
+// OWNER EMAIL & PORTRAIT
+// ============================================================
+const OWNER_EMAIL = 'luiza@maratimoc.ro';
+const savedPhoto = localStorage.getItem('luizaPortrait');
+if (savedPhoto) {
+  document.getElementById('portrait').src = savedPhoto;
+  document.getElementById('portraitWrap').classList.add('has-photo');
+}
+
+document.getElementById('photo-input').onchange = e => {
+  const f = e.target.files[0];
+  if (!f) return;
+  if (f.size > 1800000) { alert('Choose an image smaller than 1.8 MB.'); return; }
+  const reader = new FileReader();
+  reader.onload = () => {
+    localStorage.setItem('luizaPortrait', reader.result);
+    document.getElementById('portrait').src = reader.result;
+    document.getElementById('portraitWrap').classList.add('has-photo');
+  };
+  reader.readAsDataURL(f);
+};
+
+// ============================================================
+// BOOKING FORM
+// ============================================================
+document.getElementById('booking-form').onsubmit = async e => {
+  e.preventDefault();
+  const status = document.getElementById('form-status'), button = e.target.querySelector('button');
+  if (!OWNER_EMAIL) {
+    status.textContent = 'Add your email address to the site settings before accepting requests.';
+    return;
+  }
+  button.disabled = true;
+  const originalBtn = button.textContent;
+  button.textContent = '…';
+  const fd = new FormData(e.target);
+  fd.set('_subject', 'New coaching call request — ' + fd.get('name'));
+  fd.set('_autoresponse', 'Thanks for reaching out to Luiza about coaching. Your meeting request has been received. Luiza will email you shortly to arrange a time.');
+  fd.set('_template', 'table');
+  fd.set('_captcha', 'false');
+  try {
+    const response = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(OWNER_EMAIL), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(Object.fromEntries(fd))
+    });
+    if (!response.ok) throw new Error('send failed');
+    status.textContent = currentLang === 'ro'
+      ? 'Cerere trimisă! Verifică-ți inboxul pentru confirmare din partea Luizei.'
+      : currentLang === 'sv'
+        ? 'Förfrågan skickad! Kolla din inkorg efter en bekräftelse från Luiza.'
+        : 'Request sent! Check your inbox for a confirmation from Luiza.';
+    e.target.reset();
+  } catch {
+    status.textContent = currentLang === 'ro'
+      ? 'Nu am putut trimite cererea. Te rog scrie-i Luizei direct pe email.'
+      : currentLang === 'sv'
+        ? 'Vi kunde inte skicka förfrågan. Mejla Luiza direkt.'
+        : 'We could not send that request. Please email Luiza directly.';
+  } finally {
+    button.disabled = false;
+    button.textContent = originalBtn;
+  }
+};
+
+// ============================================================
+// EMAIL LINK & YEAR
+// ============================================================
+document.getElementById('email-link').onclick = e => {
+  if (OWNER_EMAIL) e.currentTarget.href = 'mailto:' + OWNER_EMAIL;
+};
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// ============================================================
+// LOGIN & ADMIN
+// ============================================================
+const ADMIN_PASSWORD = 'luiza2025';
+let isLoggedIn = false;
+const loginModal = document.getElementById('loginModal');
+const adminModal = document.getElementById('adminModal');
+
+function updatePhotoButtonVisibility() {
+  const label = document.getElementById('photoUploadLabel');
+  if (!label) return;
+  label.classList.toggle('hidden', !isLoggedIn);
+}
+
+document.getElementById('openAdminLogin').addEventListener('click', (e) => {
+  e.preventDefault();
+  if (isLoggedIn) openAdminModal();
+  else {
+    loginModal.classList.add('open');
+    document.getElementById('loginPassword').value = '';
+    document.getElementById('loginError').textContent = '';
+  }
+});
+
+document.getElementById('closeLogin').onclick = () => loginModal.classList.remove('open');
+loginModal.addEventListener('click', (e) => { if (e.target === loginModal) loginModal.classList.remove('open'); });
+
+document.getElementById('loginBtn').onclick = () => {
+  const pw = document.getElementById('loginPassword').value.trim();
+  if (pw === ADMIN_PASSWORD) {
+    isLoggedIn = true;
+    updatePhotoButtonVisibility();
+    loginModal.classList.remove('open');
+    openAdminModal();
+  } else {
+    document.getElementById('loginError').textContent = currentLang === 'ro'
+      ? 'Parolă incorectă. Încearcă din nou.'
+      : currentLang === 'sv' ? 'Fel lösenord. Försök igen.'
+      : 'Incorrect password. Try again.';
+  }
+};
+document.getElementById('loginPassword').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') document.getElementById('loginBtn').click();
+});
+
+document.getElementById('closeAdmin').onclick = () => adminModal.classList.remove('open');
+adminModal.addEventListener('click', (e) => { if (e.target === adminModal) adminModal.classList.remove('open'); });
+
+function openAdminModal() {
+  adminModal.classList.add('open');
+  renderAdminNotesList();
+}
+
+function renderAdminNotesList() {
+  const container = document.getElementById('adminNotesList');
+  const list = savedNotes || notes;
+  if (list.length === 0) {
+    container.innerHTML = '<p class="hint" style="margin:0;">—</p>';
+    return;
+  }
+  container.innerHTML = list.map((n, i) => `
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--line); gap:14px;">
+      ${n.image ? `<img class="admin-note-thumb" src="${n.image}" alt="">` : ''}
+      <div style="flex:1; min-width:0;">
+        <strong style="font-size:14px;">${escapeHTML(n.title)}</strong>
+        <div style="font-size:11px; color:var(--muted); margin-top:3px;">${n.date} · ${t('filter.' + n.category)}</div>
+      </div>
+      <button class="save" style="padding:7px 14px; font-size:12px; background:#c47b4a;" onclick="deleteNote(${i})">${t('delete.button')}</button>
+    </div>
+  `).join('');
+}
+
+window.deleteNote = function(index) {
+  if (!confirm(t('delete.confirm'))) return;
+  if (savedNotes) {
+    savedNotes.splice(index, 1);
+    saveNotes();
+  } else {
+    notes.splice(index, 1);
+  }
+  // Rebuild display from canonical source
+  const source = savedNotes ? savedNotes : notes;
+  if (currentLang === 'en' || !savedNotes) {
+    notes = JSON.parse(JSON.stringify(source));
+    render();
+  } else {
+    overlay.classList.add('visible');
+    Promise.all(source.map(n => translateNote(n, 'en', currentLang)))
+      .then(translated => { notes = translated; render(); })
+      .finally(() => overlay.classList.remove('visible'));
+  }
+  renderAdminNotesList();
+};
+
+// ============================================================
+// NOTE IMAGE UPLOAD
+// ============================================================
+let pendingNoteImage = null;
+const noteImageInput = document.getElementById('noteImageInput');
+const noteImagePreview = document.getElementById('noteImagePreview');
+const removeImageBtn = document.getElementById('removeImageBtn');
+const imageStatus = document.getElementById('imageStatus');
+
+noteImageInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    imageStatus.textContent = 'Please choose an image file.';
+    return;
+  }
+  if (file.size > 1800000) {
+    imageStatus.textContent = 'Image must be smaller than 1.8 MB.';
+    noteImageInput.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = () => {
+    pendingNoteImage = reader.result;
+    noteImagePreview.src = pendingNoteImage;
+    noteImagePreview.classList.add('visible');
+    removeImageBtn.classList.remove('hidden');
+    imageStatus.textContent = '';
+  };
+  reader.readAsDataURL(file);
+});
+
+removeImageBtn.addEventListener('click', () => resetNoteImage());
+
+function resetNoteImage() {
+  pendingNoteImage = null;
+  noteImageInput.value = '';
+  noteImagePreview.src = '';
+  noteImagePreview.classList.remove('visible');
+  removeImageBtn.classList.add('hidden');
+  imageStatus.textContent = '';
+}
+
+// ============================================================
+// ADD NOTE
+// ============================================================
+document.getElementById('addNoteBtn').onclick = () => {
+  const title = document.getElementById('noteTitle').value.trim();
+  const body = document.getElementById('noteBody').value.trim();
+  const category = document.getElementById('noteCategory').value;
+  const dateInput = document.getElementById('noteDate').value;
+
+  if (!title || !body) {
+    alert(t('addnote.alert'));
+    return;
+  }
+
+  let dateStr;
+  if (dateInput) {
+    const d = new Date(dateInput + 'T12:00:00');
+    const locale = currentLang === 'ro' ? 'ro-RO' : currentLang === 'sv' ? 'sv-SE' : 'en-US';
+    dateStr = d.toLocaleDateString(locale, { month: 'short', day: 'numeric', year: 'numeric' });
+  } else {
+    const d = new Date();
+    const locale = currentLang === 'ro' ? 'ro-RO' : currentLang === 'sv' ? 'sv-SE' : 'en-US';
+    dateStr = d.toLocaleDateString(locale, { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  const newNote = { date: dateStr, title, category, body, image: pendingNoteImage || null };
+
+  if (!savedNotes) savedNotes = [];
+  savedNotes.unshift(newNote);
+  saveNotes();
+
+  notes.unshift(newNote);
+  render();
+  renderAdminNotesList();
+
+  document.getElementById('noteTitle').value = '';
+  document.getElementById('noteBody').value = '';
+  document.getElementById('noteDate').value = '';
+  resetNoteImage();
+};
+
+// ============================================================
+// INIT
+// ============================================================
+updatePhotoButtonVisibility();
+document.querySelectorAll('.lang-switcher button').forEach(b => {
+  b.classList.toggle('active', b.dataset.lang === currentLang);
+});
+applyUITranslations();
+
+// If saved language isn't English, trigger translation on load
+if (currentLang !== 'en') {
+  setLanguage(currentLang);
+} else {
+  render();
+}
+</script>
+</body>
+</html>
