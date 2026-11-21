@@ -580,7 +580,10 @@ h2 { font:500 40px 'Playfair Display',serif; letter-spacing:-1px; margin:10px 0 
 <span data-i18n="booking.note2">I will confirm a time with you by email</span>
 </div>
 </div>
-<form class="form" id="booking-form">
+<form class="form" id="booking-form" name="booking" method="POST">
+<input type="hidden" name="form-name" value="booking">
+<input type="hidden" name="subject" value="New coaching call request (%{submissionId})">
+<p hidden><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
 <label><span data-i18n="form.name">Your name</span><input required name="name" placeholder="Name"></label>
 <label><span data-i18n="form.email">Email address</span><input required type="email" name="email" placeholder="you@example.com"></label>
 <label class="full"><span data-i18n="form.topic">What would you like to talk about?</span>
@@ -1116,30 +1119,23 @@ document.getElementById('photo-input').onchange = e => {
 document.getElementById('booking-form').onsubmit = async e => {
   e.preventDefault();
   const status = document.getElementById('form-status'), button = e.target.querySelector('button');
-  if (!OWNER_EMAIL) {
-    status.textContent = 'Add your email address to the site settings before accepting requests.';
-    return;
-  }
   button.disabled = true;
   const originalBtn = button.textContent;
   button.textContent = '…';
-  const fd = new FormData(e.target);
-  fd.set('_subject', 'New coaching call request — ' + fd.get('name'));
-  fd.set('_autoresponse', 'Thanks for reaching out to Luiza about coaching. Your meeting request has been received. Luiza will email you shortly to arrange a time.');
-  fd.set('_template', 'table');
-  fd.set('_captcha', 'false');
   try {
-    const response = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(OWNER_EMAIL), {
+    // Netlify Forms: URL-encoded POST to the static form definition; the
+    // submission is stored in Netlify and sent on by email notification.
+    const response = await fetch('/__forms.html', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(Object.fromEntries(fd))
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(e.target)).toString()
     });
     if (!response.ok) throw new Error('send failed');
     status.textContent = currentLang === 'ro'
-      ? 'Cerere trimisă! Verifică-ți inboxul pentru confirmare din partea Luizei.'
+      ? 'Cerere trimisă! Luiza îți va scrie pe email pentru a stabili o oră.'
       : currentLang === 'sv'
-        ? 'Förfrågan skickad! Kolla din inkorg efter en bekräftelse från Luiza.'
-        : 'Request sent! Check your inbox for a confirmation from Luiza.';
+        ? 'Förfrågan skickad! Luiza mejlar dig för att boka en tid.'
+        : 'Request sent! Luiza will email you to arrange a time.';
     e.target.reset();
   } catch {
     status.textContent = currentLang === 'ro'

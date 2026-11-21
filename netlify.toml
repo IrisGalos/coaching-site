@@ -1,0 +1,12 @@
+# Plain static site: a single self-contained HTML page, no framework and no
+# package manager, so there is nothing to build. Netlify publishes the
+# repository root as-is.
+[build]
+  command = ""
+  publish = "."
+
+# The page is not named index.html, so serve it at the site root.
+[[redirects]]
+  from = "/"
+  to = "/coaching-page-readable.html"
+  status = 200

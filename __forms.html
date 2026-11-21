@@ -1,0 +1,17 @@
+<!doctype html>
+<!-- Hidden form definition so Netlify Forms registers the "booking" form at
+     deploy time. Field names must match the booking form in
+     coaching-page-readable.html, which submits here via fetch. -->
+<html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>Forms</title></head>
+<body>
+<form name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="booking">
+  <input type="hidden" name="subject" value="New coaching call request (%{submissionId})">
+  <input name="bot-field">
+  <input name="name">
+  <input type="email" name="email">
+  <select name="topic"><option>Something I read here</option></select>
+  <textarea name="message"></textarea>
+  <input type="checkbox" name="consent">
+</form>
+</body></html>
