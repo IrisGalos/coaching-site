@@ -1124,29 +1124,43 @@ document.getElementById('booking-form').onsubmit = async e => {
   const originalBtn = button.textContent;
   button.textContent = '…';
   const fd = new FormData(e.target);
+  
+  // Clean up FormData formatting for FormSubmit
   fd.set('_subject', 'New coaching call request — ' + fd.get('name'));
   fd.set('_autoresponse', 'Thanks for reaching out to Luiza about coaching. Your meeting request has been received. Luiza will email you shortly to arrange a time.');
-  fd.set('_template', 'table');
-  fd.set('_captcha', 'false');
+  
   try {
     const response = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(OWNER_EMAIL), {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify(Object.fromEntries(fd))
+      headers: { 'Accept': 'application/json' },
+      body: fd
     });
-    if (!response.ok) throw new Error('send failed');
+    
+    const data = await response.json();
+    
+    // FormSubmit returns success: "true" (as a string) on success
+    if (!response.ok || (data.success && data.success.toString() !== 'true')) {
+      throw new Error(data.message || 'Send failed');
+    }
+    
     status.textContent = currentLang === 'ro'
       ? 'Cerere trimisă! Verifică-ți inboxul pentru confirmare din partea Luizei.'
       : currentLang === 'sv'
         ? 'Förfrågan skickad! Kolla din inkorg efter en bekräftelse från Luiza.'
         : 'Request sent! Check your inbox for a confirmation from Luiza.';
     e.target.reset();
-  } catch {
-    status.textContent = currentLang === 'ro'
-      ? 'Nu am putut trimite cererea. Te rog scrie-i Luizei direct pe email.'
-      : currentLang === 'sv'
-        ? 'Vi kunde inte skicka förfrågan. Mejla Luiza direkt.'
-        : 'We could not send that request. Please email Luiza directly.';
+  } catch (error) {
+    console.error(error);
+    // Check if the error is because the email needs activation
+    if (error.message && error.message.includes('activation')) {
+      status.textContent = 'Almost there! Please check your email (luiza@maratimoc.ro) to activate FormSubmit.';
+    } else {
+      status.textContent = currentLang === 'ro'
+        ? 'Nu am putut trimite cererea. Te rog scrie-i Luizei direct pe email.'
+        : currentLang === 'sv'
+          ? 'Vi kunde inte skicka förfrågan. Mejla Luiza direkt.'
+          : 'We could not send that request. Please email Luiza directly.';
+    }
   } finally {
     button.disabled = false;
     button.textContent = originalBtn;
